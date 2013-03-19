@@ -6,10 +6,6 @@
     android:background="#ffffff"
     android:clipChildren="true">
     
-    
-    
-    
-    
     <TextView
         android:id="@+id/textView0"
         android:layout_width="wrap_content"
@@ -17,7 +13,7 @@
         android:text="@string/list_quiz"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:textColor="#000000"
         />
     <ListView

@@ -47,6 +47,8 @@ public class QuestionActivity extends Activity implements OnClickListener {
 	private long idUser;
 	private final int CAMERA = 1;
 	
+	private DeadlineTask deadline;
+	
 	private Button buttonScheme;
 	private Button buttonPhoto;
 	private Button save;
@@ -102,7 +104,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		TextView title = new TextView(this);
 		title.setText(question.getTitle());
 		title.setTextColor(Color.BLACK);
-        title.setTextSize(20);
+        title.setTextSize(30);
         title.setPadding(5, 5, 5, 5);
         title.setTypeface(null,Typeface.BOLD);
         
@@ -114,6 +116,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
         
 		TextView timeView = new TextView(this);
 		timeView.setTextColor(Color.RED);
+		timeView.setTextSize(22);
 		timeView.setGravity(Gravity.CENTER);
 		
 		timeView.setLayoutParams(secondCol);
@@ -125,7 +128,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		description.setText(question.getText());
 		description.setTextColor(Color.BLACK);
 		description.setPadding(0, 0, 0, 10);
-		title.setTextSize(15);
+		description.setTextSize(22);
 		layout.addView(description);
 		
 		byte[] blob = question.getImage();
@@ -144,7 +147,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		questionSubtitle.setText(R.string.subtitle_question);
 		questionSubtitle.setTextColor(Color.BLACK);
 		questionSubtitle.setPadding(0, 0, 0, 10);
-		questionSubtitle.setTextSize(15);
+		questionSubtitle.setTextSize(22);
 		questionSubtitle.setTypeface(null,Typeface.BOLD);
 		layout.addView(questionSubtitle);
 		
@@ -177,10 +180,11 @@ public class QuestionActivity extends Activity implements OnClickListener {
         if(!question.isReadOnly()){
         	
     		if(question.getTime()>0){
-    			DeadlineTask deadline = new DeadlineTask();
+    			deadline = new DeadlineTask();
     			deadline.setTimeView(timeView);
     			deadline.setActivity(this);
     			deadline.execute(question.getTime());
+    			deadline.cancel(true);
     		}
         	
         	save = new Button(this);
@@ -317,7 +321,12 @@ public class QuestionActivity extends Activity implements OnClickListener {
 			//TODO
 		}else if(text.equals(getResources().getString(R.string.save))){
 			
-			save();
+			if(deadline != null){
+				deadline.cancel(true);
+				save(false);
+			}
+			
+			save(false);
 			
 		}else if(text.equals(getResources().getString(R.string.next))){
 			Intent preIntent = new Intent(this,
@@ -398,8 +407,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		       .setCancelable(false)
 		       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
-		        	   
-		        	   QuestionActivity.this.save();
+		        	   QuestionActivity.this.save(true);
 		        	   QuestionActivity.this.disableButtons();
 		           }
 		       })
@@ -431,9 +439,10 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		}
 	}
 	
-	public void save(){
+	public void save(boolean readOnly){
 		
 		QuizController quizController = new QuizController();
+		question.setReadOnly(readOnly);
 		
 		String message = 
 	       	String.format(getResources().getString(R.string.log_question_answer)+" %s", idUser+"", question.getIdQuestion()+"");

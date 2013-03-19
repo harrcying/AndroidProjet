@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="#ffffff"
     android:clipChildren="true"
-    android:gravity="center_horizontal"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:gravity="center"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
 	<TextView
         android:id="@+id/textView0"
         android:layout_width="wrap_content"

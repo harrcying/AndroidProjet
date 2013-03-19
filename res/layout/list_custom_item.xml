@@ -9,9 +9,11 @@
     <TextView
         android:id="@+id/list_item"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_marginBottom="1dip"
         android:background="#FFFFFF"
+        android:textSize="22dp"
+   		android:padding="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textColor="#000000" />

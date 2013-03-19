@@ -53,9 +53,10 @@ public class TreeActivity extends Activity implements View.OnClickListener{
         	item.setText(prefix + node.getTitle());
         	item.setId(node.getId());
         	item.setOnClickListener(this);
-        	item.setTextSize(15);
+        	item.setTextSize(22);
         	item.setTextColor(Color.BLACK);
         	item.setBackgroundColor(Color.WHITE);
+        	item.setPadding(7, 7, 7, 7);
         	
         	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
            	     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -124,7 +125,7 @@ public class TreeActivity extends Activity implements View.OnClickListener{
         TextView title = new TextView(this);
         title.setText(R.string.title_quiz);
         title.setTextColor(Color.BLACK);
-        title.setTextSize(20);
+        title.setTextSize(30);
         title.setPadding(0, 5, 0, 5);
         
         layout.addView(title);
@@ -132,7 +133,7 @@ public class TreeActivity extends Activity implements View.OnClickListener{
         TextView description = new TextView(this);
         description.setText(quiz.getDescription());
         description.setTextColor(Color.BLACK);
-        description.setTextSize(15);
+        description.setTextSize(22);
         description.setPadding(0, 5, 0, 5);
         
         layout.addView(description);
@@ -157,6 +158,7 @@ public class TreeActivity extends Activity implements View.OnClickListener{
         TextView subtitle = new TextView(this);
         subtitle.setText(R.string.subtitle_questions);
         subtitle.setTextColor(Color.BLACK);
+        subtitle.setTextSize(22);
         subtitle.setTypeface(null,Typeface.BOLD);
         subtitle.setPadding(0, 5, 0, 5);
         
