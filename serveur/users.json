@@ -1,0 +1,11 @@
+{
+	"foo1": {
+		"password":"xyz",
+		"courses": ["math", "java"]
+	}, 
+	
+	"foo2": {
+		"password": "abc", 	
+		"courses": ["math"]
+	}
+}
