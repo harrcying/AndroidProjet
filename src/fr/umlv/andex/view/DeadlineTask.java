@@ -53,6 +53,7 @@ public class DeadlineTask  extends AsyncTask{
 	protected void onProgressUpdate(Object... values) {
 		super.onProgressUpdate(values);
 		
+		//Hola
 		SimpleDateFormat format = new SimpleDateFormat("mm:ss");
 		long time = (Long)values[0];
 		Date date = new Date(time);
