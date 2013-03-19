@@ -2,12 +2,12 @@ package fr.umlv.andex.data;
 
 public class AnswerPhoto extends Answer {
 	
+	private String path;
+	
 	public AnswerPhoto(){
 		super();
 		setTypeAnswer(TypeAnswer.TYPE_ANSWER_PHOTO);
 	}
-	
-	private String path;
 
 	public String getPath() {
 		return path;
