@@ -9,6 +9,11 @@ public class Question {
 	private String text;
 	private long time;
 	private long idQuiz;
+	private long idQuestion;
+	private boolean readOnly;
+	private byte[] image;
+	private List<Answer> answers = new ArrayList<Answer>();
+
 	
 	public long getIdQuiz() {
 		return idQuiz;
@@ -16,13 +21,7 @@ public class Question {
 	public void setIdQuiz(long idQuiz) {
 		this.idQuiz = idQuiz;
 	}
-	private long idQuestion;
-	private boolean readOnly;
-	
-	private byte[] image;
-	
-	private List<Answer> answers = new ArrayList<Answer>();
-	
+			
 	public List<Answer> getAnswers() {
 		return answers;
 	}

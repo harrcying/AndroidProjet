@@ -7,13 +7,17 @@ public class NodeQuestion {
 
 	private String title;
 	private long time;
+	private int id;
+	private boolean open;
+	private List<NodeQuestion> nodes = new ArrayList<NodeQuestion>();
+
+	
 	public long getTime() {
 		return time;
 	}
 	public void setTime(long time) {
 		this.time = time;
 	}
-	private int id;
 	
 	public int getId() {
 		return id;
@@ -27,10 +31,7 @@ public class NodeQuestion {
 	public void setOpen(boolean open) {
 		this.open = open;
 	}
-	private boolean open;
-	
-	private List<NodeQuestion> nodes = new ArrayList<NodeQuestion>();
-	
+		
 	public String getTitle() {
 		return title;
 	}
