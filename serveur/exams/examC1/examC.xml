@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>	
+<examen examId="123456" matiere="C++" examinateurId="Vialette">
+	
+	<partie nom="Partie 1" titre="Feuille 1">
+		<question nom="Question 1" bareme="5">
+			<enonce>
+				Voulez-vous gagnez 5 points ?
+				<qcm>
+					<choix id="0">Oui</choix>
+					<choix id="1">Non</choix>
+				</qcm>
+			</enonce>
+			<reponses>
+				<reponse type="TYPE_ANSWER_RADIO"></reponse>
+			</reponses>
+		</question>
+	</partie>
+	
+	<partie nom="Partie 2" titre="Feuille 2">
+		<question nom="Question 1" bareme="5">
+			<enonce>Voulez-vous gagnez 5 points ?</enonce>
+			<reponses>
+				<reponse type="TYPE_ANSWER_TEXT"></reponse>
+			</reponses>
+		</question>
+	</partie>
+	
+	<partie nom="partie 3" titre="Feuille 3">
+		<exercice nom="exercice 1" titre="MaxPlus">
+			<questionGroupe nom="Question Group 1">
+				<enonce> Ecrire une classe template MaxPlus paramétrée par un type T. Un objet de type MaxPlus[T] contient une valeur numérique de type T et la classe contient : </enonce>
+				<question nom="Question 1.1" bareme="0.33">
+					<enonce>Un constructeur qui prend une valeur initiale en paramétre, mais qui ne permet pas le transtypage implicite</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+				<question nom="Question 1.2" bareme="0.33">
+					<enonce>Une surcharge de l'opérateur += qui remplace la valeur courante par le membre droit si ce dernier est plus grand</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+				<question nom="Question 1.3" bareme="0.33">
+					<enonce>Une surcharge de l'opérateur += qui incrémente la valeur courante par le membre droit</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+				<question nom="Question 1.4" bareme="0.33">
+					<enonce>Une surcharge de l'opérateur + qui retourne le maximum des deux valeurs</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+				<question nom="Question 1.5" bareme="0.33">
+					<enonce>Une surcharge de l'opérateur * qui retourne la somme des deux valeurs</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+				<question nom="Question 1.6" bareme="0.33">
+					<enonce>Une surcharge de l'opérateur de transtypage en une valeur de type T</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+			</questionGroupe>
+			<question nom="Question 2" bareme="1">
+				<enonce> On désire que les objets de type MaxPlus se comportent bien vis a vis des flows</enonce>
+				<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+		</exercice>
+		<exercice nom="exercice 2" titre="Exercice 2">
+			<question nom="Question 1" bareme="1">
+				<enonce>Ecrire la classe binomial de sorte a ce que Binomial[N,K]::val est une constannte égale a binomiale(n,k)</enonce>
+				<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+			<question nom="Question 2" bareme="1">
+				<enonce>Ecrire un programme binomiale.cc de sorte que la ligne g++ -DN=n binomiale.cc produise un programme qui affiche binomial(n,k) pour k compris entre 0 et n.</enonce>
+				<reponses>
+					<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+		</exercice>
+	</partie>
+	
+	<partie nom="Partie 4" titre="Feuille 4">
+		<exercice nom="exercice 1" titre="Exercice 1">
+			<question nom="question 1" titre="Question 1" bareme="0.5">
+				<enonce>Créer un type TypeList[T,U] dans lequel figurent deux définitions de types :head égal à T et tail égal a U.
+On utilisera un type NullType pour marquer la fin de la liste.
+Ainsi, TypeeList[int, TypeList[double, NullType]] représente la liste [int; double].
+				</enonce>
+				<reponses>
+					<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+			<question nom="Question 2" titre="Question 2" bareme="0.5">
+				<enonce>Créer une classe template GetType paramétrée par une liste de types L et un entier positif N de sorte que GetType[L,N]::type est le type d'indice N dans la liste L.</enonce>
+				<reponses>
+					<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+		</exercice>
+		<exercice nom="exercice 2" titre="Exercice 2">
+			<questionGroupe nom="=D">
+				<question nom="question 1.1" titre="Question 1.1" bareme="0.5">
+					<enonce>Ecrire une classe Template Nuple paramétrée par une liste de types L et qui permet de stocker autant de valeurs qu'il y a de types dans la liste L, le type de la K-ième valeur étant GetTYpe[L,K]::type.</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+				<question nom="question 1.2" titre="Question 1.2" bareme="0.5">
+					<enonce>Proposer une implémentation pour la classe Nuple[L] (On écrira les méthodes plus tard), de sorte que Nuple[L]::val est la première valeur du N-uplet</enonce>
+					<reponses>
+						<reponse type="TYPE_ANSWER_TEXT"></reponse>
+					</reponses>
+				</question>
+			</questionGroupe>
+		</exercice>
+		<exercice nom="exercice 3" titre="Exercice 3">
+			<question nom="question 1" titre="Question 1" bareme="1">
+				<enonce>Ecrire une classe template HelpGet paramétrée par une liste L et un entier positif K et qui contient une méthode statique get dont l'argument est un N-uplet et qui retourne une référence sur la K-ième valeur du N-uplet</enonce>
+				<reponses>
+					<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+		</exercice>
+		<exercice nom="exercice 4" titre="Exercice 4">
+			<question nom="question 1" titre="a)" bareme="1">
+				<enonce>Ecrire une méthode template at dans la classe Nuple, paramétrée par un entier positif K, sans argument et qui permet d'acceder à la K-ieme valeur de la liste. On pourra écrire:</enonce>
+				<reponses>
+					<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+			<question nom="question 2" titre="b)" bareme="1">
+				<enonce>Faire en sorte que l'on puisse spécifier les valeurs d'un N-uplet avec la syntaxe suivante:</enonce>
+				<reponses>
+					<reponse type="TYPE_ANSWER_TEXT"></reponse>
+				</reponses>
+			</question>
+		</exercice>
+	</partie>
+
+</examen>

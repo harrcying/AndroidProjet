@@ -4,7 +4,6 @@
 
 *.pydevproject
 .metadata
-libs/
 gen/
 bin/
 tmp/

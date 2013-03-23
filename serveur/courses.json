@@ -2,5 +2,6 @@
 	"math": 
 		["mathexam1", "mathexam2"], 
 	"java": ["javapartial", "javafinal"]
+	"c" : ["examC1"]
 
 }
