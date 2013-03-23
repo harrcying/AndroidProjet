@@ -14,6 +14,7 @@ public class Question implements Serializable{
 	private boolean readOnly;
 	private byte[] image;
 	private List<Answer> answers = new ArrayList<Answer>();
+	private float scale;
 
 			
 	public List<Answer> getAnswers() {
@@ -59,5 +60,11 @@ public class Question implements Serializable{
 	}
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+	public float getScale() {
+		return scale;
+	}
+	public void setScale(float scale) {
+		this.scale = scale;
 	}	
 }

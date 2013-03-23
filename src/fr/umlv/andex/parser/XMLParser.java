@@ -11,9 +11,19 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import fr.umlv.andex.data.Answer;
+import fr.umlv.andex.data.AnswerCheck;
+import fr.umlv.andex.data.AnswerPhoto;
+import fr.umlv.andex.data.AnswerRadio;
+import fr.umlv.andex.data.AnswerSchema;
+import fr.umlv.andex.data.AnswerText;
+import fr.umlv.andex.data.NodeQuestion;
+import fr.umlv.andex.data.Option;
+import fr.umlv.andex.data.Question;
+import fr.umlv.andex.data.Quiz;
+import fr.umlv.andex.data.StateQuiz;
+import fr.umlv.andex.data.TreeQuestion;
 import fr.umlv.andex.data.TypeAnswer;
-
-import android.util.Log;
 
 public class XMLParser {
 	private final File examFile;
@@ -43,7 +53,7 @@ public class XMLParser {
 		this.examFile = file;
 	}
 
-	public void /*TreeQuestion*/ getInfo() throws XMLException, JDOMException, IOException {
+	public void /*Quiz*/ getInfo() throws XMLException, JDOMException, IOException {
 		Element racine;
 		Document document=null;
 
@@ -51,19 +61,33 @@ public class XMLParser {
 		document = sxb.build(examFile);
 
 		racine = document.getRootElement(); // recupere <examen>
-		// new Quiz
+		Quiz quiz = new Quiz();
 		long id = racine.getAttribute(EXAMID_A).getLongValue();
 		String matiere = racine.getAttributeValue(SUBJECT_A);
+		@SuppressWarnings("unused") /* pour une utilisation ulterieure */
 		String examinateur = racine.getAttributeValue(EXAMINERID_A);
-		Log.d("", "id : " + id + " matiere : " + matiere + " examinateur : " + examinateur);
-		visitElemt(racine, 0, 0, "");
+		String type = racine.getAttributeValue(TYPE_A);
+		String title = racine.getAttributeValue(TITLE_A);
+		quiz.setDescription("Examen de " + matiere);
+		quiz.setIdQuiz(id);
+		quiz.setTitle(title);
+		if (type.compareTo("NOW") == 0) {
+			quiz.setState(StateQuiz.IN_PROGRESS);
+		} else if (type.compareTo("PAST") == 0) {
+			quiz.setState(StateQuiz.DONE);
+		} else {
+			throw new XMLException("Wrong type Exam");
+		}
+		TreeQuestion tree = new TreeQuestion();
+		tree.setNodes(new ArrayList<NodeQuestion>());
+		quiz.setTree(tree);
+		visitElemt(racine, 0, 0, "", tree.getNodes(), quiz.getQuestionsByOrder(), null);
 		return;
 	}
 
-	private void visitElemt (Element elmt, int idRoot, int level, String statmtRoot) throws XMLException {
+	private void visitElemt (Element elmt, int idRoot, int level, String statmtRoot, List<NodeQuestion> listNodes, List<Question> listQuestions, NodeQuestion parentNode) throws XMLException {
 		List<Element> listParts = elmt.getChildren();
 		int i = 1;
-		/* new list */
 		for (Element p : listParts) {
 			String tagName = p.getName();
 			if (tagName.compareTo(STATEMENT_B) != 0) {
@@ -71,10 +95,9 @@ public class XMLParser {
 				if (tagName.compareTo(QUESTION_B)!=0) {
 					String statement = "";
 					String title = "";
-					//System.out.println(tagName + " " + id);
-					Log.d("", tagName + " " + id);
 					String name = p.getAttributeValue(NAME_A);
-					System.out.println("Nom : " + name);
+					NodeQuestion node = new NodeQuestion();
+					node.setId(id);
 					if (tagName.compareTo(QUESTIONGROUP_B)==0) {
 						statement = p.getChildText(STATEMENT_B);
 						if (statement != null && statement.length()!=0) {
@@ -83,13 +106,13 @@ public class XMLParser {
 						} else {
 							statement = "";
 						}
-						System.out.println("enonce : " + statement);
+						node.setTitle(name);
 					} else {
 						title = p.getAttributeValue(TITLE_A);
-						System.out.println("titre = " + title);
+						node.setTitle(name + " : " + title);
 					}
-					/* new NodeQuestion */
-					visitElemt(p, id, level+1, statement);
+					listNodes.add(node);
+					visitElemt(p, id, level+1, statement, node.getNodes(), listQuestions, node);
 				} else {
 					String name = p.getAttributeValue(NAME_A);
 					float scale;
@@ -103,81 +126,43 @@ public class XMLParser {
 						throw new XMLException("statement null : "+id);
 					}
 					statement = statmtRoot + formateStatement(statement);
-					System.out.println("nom : " + name + " bareme : " + scale + "\nenonce : " + statement);
-					/* new Question : pas les choix dedans */
+					Question quest = new Question();
+					quest.setIdQuestion(id);
+					quest.setTitle(name);
+					quest.setText(statement);
+					quest.setScale(scale);
+					parentNode.setQuestion(quest);
+					listQuestions.add(quest);
+					
 					Element answers = p.getChild(ANSWERS_B);
 					String type;
 					TypeAnswer tq;
-					List<String> choices = null;	// -> liste de Option
+					List<Option> choices = null;
 					for (Element a : answers.getChildren(ANSWER_B)) {
 						type = a.getAttributeValue(TYPE_A);
 						tq = TypeAnswer.valueOf(type);
-						int choiceId;
-						// Answer answer;
-
-
-						/* Création des réponses et Récupération des réponses données : */
-						switch (tq) {
-						case TYPE_ANSWER_RADIO :
-							// answer = new AnswerRadio();
-							Element opt = a.getChild(CHOICE_B);
-							if (opt != null) {
-								try {
-									//choiceId = a.getChild(CHOICE_B).getAttribute(CHOICEID_A).getIntValue();
-									choiceId = opt.getAttribute(CHOICEID_A).getIntValue();
-									// setValue
-									System.out.println(choiceId);
-								} catch (DataConversionException e1) {
-									throw new XMLException("Answer id isn't an integer : "+id);
-								}
-							}
-							break;
-						case TYPE_ANSWER_CHECK : 
-							// answer = new AnswerCheck();
-							List<Element> listSelectChoices = a.getChildren(CHOICE_B);
-							List<Integer> listC = new ArrayList<Integer>();
-							for (Element e : listSelectChoices) {
-								try {
-									choiceId = e.getAttribute(CHOICE_B).getIntValue();
-									listC.add(choiceId);
-									System.out.println(choiceId);
-								} catch (DataConversionException e1) {
-									throw new XMLException("Answer id isn't an integer : "+id);
-								}
-							}
-							// setValues
-							break;
-						case TYPE_ANSWER_TEXT :
-							// answer = new AnswerTest();
-							String asw = a.getText();
-							// setValue
-							System.out.println(asw);
-							break;
-						case TYPE_ANSWER_PHOTO :
-							// answer = new AnswerPhoto();
-							String pictPath = a.getText();
-							// setValue
-							System.out.println(pictPath);
-							break;
-						case TYPE_ANSWER_SCHEMA :
-							// answer = new AnswerSchema();
-							String schPath = a.getText();
-							// setValue
-							System.out.println(schPath);
-							break;
-						default :
-							throw new XMLException("Wrong answer type : "+id);
-						}
-
-						/* récupération des choix de l'énoncé : */
 						if (choices!=null && (tq==TypeAnswer.TYPE_ANSWER_RADIO || tq==TypeAnswer.TYPE_ANSWER_CHECK)){
 							throw new XMLException("multiple mcq answer : "+id);
 						}
+						int choiceId;
+						Answer answer;
+						Element mcq;
+						
 						switch (tq) {
 						case TYPE_ANSWER_RADIO :
-						case TYPE_ANSWER_CHECK :
-							Element mcq = p.getChild(STATEMENT_B).getChild(MCQ_B);
-							choices = new ArrayList<String>(); 
+							AnswerRadio radio = new AnswerRadio();
+							Element opt = a.getChild(CHOICE_B);
+							if (opt != null) {
+								try {
+									choiceId = opt.getAttribute(CHOICEID_A).getIntValue();
+									radio.setValue(choiceId);
+								} catch (DataConversionException e1) {
+									throw new XMLException("Answer id isn't an integer : "+id);
+								}
+							}
+							
+							mcq = p.getChild(STATEMENT_B).getChild(MCQ_B);
+							choices = new ArrayList<Option>(); 
 							for (Element choice : mcq.getChildren()) {
 								String c = choice.getText();
 								try {
@@ -185,20 +170,79 @@ public class XMLParser {
 								} catch (DataConversionException e1) {
 									throw new XMLException("Choice id isn't an integer : "+id);
 								}
-								choices.add(c); // TODO : type option
+								Option option = new Option();
+								option.setDescription(c);
+								option.setId(choiceId);
+								choices.add(option);
 
 							}
+							radio.setOptions(choices);
+							
+							answer = radio;
+							answer.setTypeAnswer(TypeAnswer.TYPE_ANSWER_RADIO);
 							break;
-						default :
-							break;
-						}
-						if (choices != null) { // a supprimer
-							for (String s : choices) {
-								System.out.println("- " + s);
+							
+						case TYPE_ANSWER_CHECK : 
+							AnswerCheck check = new AnswerCheck();
+							List<Element> listSelectChoices = a.getChildren(CHOICE_B);
+							List<Integer> listC = new ArrayList<Integer>();
+							for (Element e : listSelectChoices) {
+								try {
+									choiceId = e.getAttribute(CHOICE_B).getIntValue();
+									listC.add(choiceId);
+								} catch (DataConversionException e1) {
+									throw new XMLException("Answer id isn't an integer : "+id);
+								}
 							}
+							check.setValues(listC);
+							
+							mcq = p.getChild(STATEMENT_B).getChild(MCQ_B);
+							choices = new ArrayList<Option>(); 
+							for (Element choice : mcq.getChildren()) {
+								String c = choice.getText();
+								try {
+									choiceId = choice.getAttribute(CHOICEID_A).getIntValue();
+								} catch (DataConversionException e1) {
+									throw new XMLException("Choice id isn't an integer : "+id);
+								}
+								Option option = new Option();
+								option.setDescription(c);
+								option.setId(choiceId);
+								choices.add(option);
+
+							}
+							check.setOptions(choices);
+							
+							answer = check;
+							answer.setTypeAnswer(TypeAnswer.TYPE_ANSWER_CHECK);
+							break;
+							
+						case TYPE_ANSWER_TEXT :
+							AnswerText text = new AnswerText();
+							text.setValue(a.getText());
+							answer = text;
+							answer.setTypeAnswer(TypeAnswer.TYPE_ANSWER_TEXT);
+							break;
+							
+						case TYPE_ANSWER_PHOTO :
+							AnswerPhoto photo = new AnswerPhoto();
+							photo.setPath(a.getText());
+							answer = photo;
+							answer.setTypeAnswer(TypeAnswer.TYPE_ANSWER_PHOTO);
+							break;
+							
+						case TYPE_ANSWER_SCHEMA :
+							AnswerSchema schema = new AnswerSchema();
+							schema.setPath(a.getText());
+							answer = schema;
+							answer.setTypeAnswer(TypeAnswer.TYPE_ANSWER_SCHEMA);
+							break;
+							
+						default :
+							throw new XMLException("Wrong answer type : "+id);
 						}
+						quest.getAnswers().add(answer);
 					}
-					// TODO return;
 				}
 				i++;
 			}

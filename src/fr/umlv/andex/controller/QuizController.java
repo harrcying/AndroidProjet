@@ -1,5 +1,6 @@
 package fr.umlv.andex.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,7 +10,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jdom2.JDOMException;
+
 import android.content.Context;
+import android.os.Environment;
 import fr.umlv.andex.data.Answer;
 import fr.umlv.andex.data.AnswerCheck;
 import fr.umlv.andex.data.AnswerPhoto;
@@ -23,6 +27,8 @@ import fr.umlv.andex.data.Quiz;
 import fr.umlv.andex.data.QuizDescription;
 import fr.umlv.andex.data.StateQuiz;
 import fr.umlv.andex.data.TreeQuestion;
+import fr.umlv.andex.parser.XMLException;
+import fr.umlv.andex.parser.XMLParser;
 
 public class QuizController {
 
@@ -182,15 +188,12 @@ public class QuizController {
 		}
 	}
 
-	public void saveExam(Context context, String fileName){
-		/* TODO :
-		 * Thread thd = new Thread(new Runnable() {
+	public void saveExam(Context context, final String fileName){
+		 Thread thd = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				File file = new File(Environment.getExternalStorageDirectory(), fileName);
-				TextView t = (TextView) findViewById(R.id.textView1);
-				t.setText(""+file.canRead());
 				XMLParser parser = new XMLParser(file);
 				try {
 					parser.getInfo();
@@ -205,7 +208,6 @@ public class QuizController {
 			}
 		});
 		thd.start();
-		 */
 	}
 
 	public void saveQuestion(Context context, Question question, long idUser){

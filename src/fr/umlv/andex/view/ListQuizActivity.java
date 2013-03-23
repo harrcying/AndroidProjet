@@ -85,7 +85,7 @@ public class ListQuizActivity extends Activity implements OnItemClickListener{
 	private void takeExam(){
 		
 	    QuizController quizController = new QuizController();
- 	    String quizFileName = ""; // TODO (a partir du serveur)
+ 	    String quizFileName = "examC.xml"; // TODO (a partir du serveur)
  	    quizController.saveExam(this, quizFileName);
  	    
  	   String message = 

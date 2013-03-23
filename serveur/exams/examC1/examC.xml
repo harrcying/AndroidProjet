@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>	
-<examen examId="123456" matiere="C++" examinateurId="Vialette">
+<examen examId="123456" matiere="C++" title="Examen - Semestre 1" examinateurId="Vialette" type="">		<!-- type = NOW ou PAST -->
 	
 	<partie nom="Partie 1" titre="Feuille 1">
 		<question nom="Question 1" bareme="5">
