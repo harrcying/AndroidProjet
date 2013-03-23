@@ -16,6 +16,10 @@ public class LoginActivity extends Activity {
 	private LoginController loginController = new LoginController();
 	private EditText nameUser;
 	private EditText password;
+
+	private boolean isWaiting;
+	private User user = new User();
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,20 +38,41 @@ public class LoginActivity extends Activity {
     	
     	final String username = nameUserText;
     	final String password = passwordText;
-    	User user = loginController.findUserByUserAndPassword(nameUserText, passwordText);
     	
-    	Thread t = new Thread(new Runnable() {
-			@Override
+    	Runnable r = new Runnable() {
+    		
+    		@Override
 			public void run() {
-				User user =loginController.findUserByUserAndPassword(username, password);
+				try {
+					synchronized (this) {	
+						isWaiting = false;
+						user = loginController.findUserByUserAndPassword(username, password);
+						isWaiting=true;
+						this.wait(); // On attends que le main ait bien vu que l'user a été crée.
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
-		});
+    		
+		};
+    	
+    	Thread t = new Thread(r);
     	t.start();
     	
-    	
-    	
-    	
+    	synchronized (r) {
+			while(!isWaiting); // On attends que r ait fini de créer l'user
+			r.notify(); // On dit a r que maintenant qu'on a vu qu'il avait fini de créer l'user il pouvait continuer
+    	}
+
+		try {
+			t.join(); // On attends que la thread ait fini sont boulot et qu'elle meure.
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		
     	if(user == null){
     		Toast.makeText(this, "Utilisateur ou Mot de pass incorrect.", Toast.LENGTH_SHORT).show();
     		return;
