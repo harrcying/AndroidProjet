@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -40,6 +41,7 @@ public class XMLParser {
 	private static String ANSWERS_B			= "reponses";
 	private static String ANSWER_B			= "reponse";
 	private static String EXAMID_A 			= "examId";
+	private static String TIME_A 			= "temps";
 	private static String NAME_A 			= "nom";
 	private static String SUBJECT_A 		= "matiere";
 	private static String EXAMINERID_A 		= "examinateurId";
@@ -53,7 +55,7 @@ public class XMLParser {
 		this.examFile = file;
 	}
 
-	public void /*Quiz*/ getInfo() throws XMLException, JDOMException, IOException {
+	public Quiz getInfo() throws XMLException, JDOMException, IOException {
 		Element racine;
 		Document document=null;
 
@@ -82,7 +84,7 @@ public class XMLParser {
 		tree.setNodes(new ArrayList<NodeQuestion>());
 		quiz.setTree(tree);
 		visitElemt(racine, 0, 0, "", tree.getNodes(), quiz.getQuestionsByOrder(), null);
-		return;
+		return quiz;
 	}
 
 	private void visitElemt (Element elmt, int idRoot, int level, String statmtRoot, List<NodeQuestion> listNodes, List<Question> listQuestions, NodeQuestion parentNode) throws XMLException {
@@ -116,8 +118,13 @@ public class XMLParser {
 				} else {
 					String name = p.getAttributeValue(NAME_A);
 					float scale;
+					int time = 0;
 					try {
 						scale = p.getAttribute(SCALE_A).getFloatValue();
+						Attribute atr = p.getAttribute(TIME_A);
+						if (atr != null) {
+							time = atr.getIntValue();
+						}
 					} catch (Exception e) {
 						throw new XMLException(e.getMessage() + "err convertion : "+id);
 					}
@@ -131,6 +138,9 @@ public class XMLParser {
 					quest.setTitle(name);
 					quest.setText(statement);
 					quest.setScale(scale);
+					if (time != 0) {
+						quest.setTime(time);
+					}
 					parentNode.setQuestion(quest);
 					listQuestions.add(quest);
 					

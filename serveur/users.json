@@ -1,11 +1,11 @@
 {
 	"foo1": {
 		"password":"xyz",
-		"courses": ["math", "java", "c"]
+		"courses": ["math", "java", "c++"]
 	}, 
 	
 	"foo2": {
 		"password": "abc", 	
-		"courses": ["math", "c"]
+		"courses": ["math", "c++"]
 	}
 }

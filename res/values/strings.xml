@@ -9,7 +9,7 @@
     <string name="previous">Précédent</string>
     <string name="umlv">Université Paris-Est Marne-la-Vallée</string>
     <string name="yes">Oui</string>
-    <string name="no">No</string>
+    <string name="no">Non</string>
     
 	<!-- Login -->
     <string name="login_user">Nom utilisateur</string>
@@ -20,18 +20,18 @@
     <string name="take_photo">Prendre une photo</string>
     <string name="take_schema">Faire un dessin</string>
     <string name="title_question">Question</string>
-    <string name="subtitle_question">Response</string>
+    <string name="subtitle_question">Reponse</string>
     
     <!-- Quiz -->
     <string name="list_quiz">Examens</string>
     <string name="quiz_status">État:</string>
     <string name="title_quiz">Examen</string>
     <string name="subtitle_questions">Questions</string>
-    <string name="timeover">Le tems pour donner la response a fini. Voulez-vous garder les valeurs?</string>
+    <string name="timeover">Le temps imparti est écoulé. Voulez-vous sauvegarder les valeurs?</string>
     
     <!-- List Quiz -->
-    <string name="text_confirm">C\'est éxamen est en cours. Vous voulez le prendre?</string>
-    <string name="text_time">Ce question a du temps. Vous avez:</string>
+    <string name="text_confirm">Cet examen est en cours. Voulez-vous y participer ?</string>
+    <string name="text_time">Cette question est limitée en temps. Vous avez:</string>
     
     
     <!-- Log User -->

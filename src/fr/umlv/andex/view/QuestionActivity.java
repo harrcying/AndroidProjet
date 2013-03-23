@@ -37,6 +37,7 @@ import fr.umlv.andex.data.AnswerText;
 import fr.umlv.andex.data.Option;
 import fr.umlv.andex.data.Question;
 import fr.umlv.andex.data.Quiz;
+import fr.umlv.andex.data.StateQuiz;
 
 public class QuestionActivity extends Activity implements OnClickListener {
 
@@ -67,7 +68,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		QuizController quizController = new QuizController();
         question = (Question)getIntent().getExtras().get("question");
         quiz = (Quiz)getIntent().getExtras().get("quiz");
-		
+        		
 		LinearLayout layout = new LinearLayout(this); 
         layout.setBackgroundColor(Color.WHITE);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -86,13 +87,16 @@ public class QuestionActivity extends Activity implements OnClickListener {
         String message = 
 	       	String.format(getResources().getString(R.string.log_question_view)+" %s", idUser+"", question.getIdQuestion()+"");
 	    quizController.addLogUser(this, message, idUser);
-        
+	    
         createView(layoutIntern);
         setContentView(layout);
+
 	}
 	
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	private void createView(LinearLayout layout){
+		
+		System.out.println("coucou");
 		
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
@@ -125,9 +129,9 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		
 		timeView.setLayoutParams(secondCol);
         titleLayout.addView(timeView, secondCol);
-				
+        
 		layout.addView(titleLayout);
-		
+				
 		TextView description = new TextView(this);
 		description.setText(question.getText());
 		description.setTextColor(Color.BLACK);
@@ -135,8 +139,10 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		description.setTextSize(22);
 		layout.addView(description);
 		
+		System.out.println("2");
+		
 		byte[] blob = question.getImage();
-		if(blob.length>0){
+		if(blob!=null && blob.length>0){
 			Bitmap icon = BitmapFactory.decodeResource(this.getResources(),
                     R.drawable.ic_launcher);
 			//TODO
@@ -146,6 +152,8 @@ public class QuestionActivity extends Activity implements OnClickListener {
 			//view.setImageBitmap(bmp);
 			layout.addView(image);
 		}
+		
+		System.out.println("3");
 		
 		TextView questionSubtitle = new TextView(this);
 		questionSubtitle.setText(R.string.subtitle_question);
@@ -471,7 +479,8 @@ public class QuestionActivity extends Activity implements OnClickListener {
 				};break;
 			}
 		}
-		
-		quizController.saveQuestion(this, question, idUser);
+		if (quiz.getState()==StateQuiz.IN_PROGRESS) {
+			quizController.saveQuestion(this, quiz, question, idUser);
+		}
 	}
 }
