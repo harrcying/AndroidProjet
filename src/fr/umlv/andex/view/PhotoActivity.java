@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -62,7 +63,7 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 			}
 		}
 		
-		// On récupère notre surface pour le preview
+		// On recupere notre surface pour le preview
 		surfaceCamera = (SurfaceView) findViewById(R.id.surfaceViewCamera);
 
 		// Quand on clique sur notre surface
@@ -81,6 +82,7 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 		InitializeCamera();
 	}
 
+	@SuppressWarnings("deprecation")
 	public void InitializeCamera() {
 		// On attache nos retour du holder à notre activite
 		surfaceCamera.getHolder().addCallback(this);
@@ -114,11 +116,11 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 	public void surfaceChanged(SurfaceHolder holder, int format, int  width,
 			int height) {
 
-		// Si le mode preview est lancé alors on le stop
+		// Si le mode preview est lance alors on le stop
 		if (isPreview) {
 			camera.stopPreview();
 		}
-		// On récupère les parametres de la camera
+		// On recupere les parametres de la camera
 		Camera.Parameters parameters = camera.getParameters();
 
 		// On change la taille
@@ -146,7 +148,7 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// On arrête la camera et on rend la main
+		// On arrete la camera et on rend la main
 		if (camera != null) {
 			camera.stopPreview();
 			isPreview = false;
@@ -180,6 +182,7 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 		}
 	};
 
+	@SuppressLint("SimpleDateFormat")
 	private void SavePicture() {
 		try {
 			SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM- dd-HH.mm.ss");
@@ -206,6 +209,7 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String getRealPathFromURI(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
         Cursor cursor = managedQuery(contentUri, proj, null, null, null);

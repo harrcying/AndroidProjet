@@ -31,17 +31,19 @@ import fr.umlv.andex.controller.QuizController;
 import fr.umlv.andex.data.Answer;
 import fr.umlv.andex.data.AnswerCheck;
 import fr.umlv.andex.data.AnswerPhoto;
-import fr.umlv.andex.data.AnswerSchema;
 import fr.umlv.andex.data.AnswerRadio;
+import fr.umlv.andex.data.AnswerSchema;
 import fr.umlv.andex.data.AnswerText;
 import fr.umlv.andex.data.Option;
 import fr.umlv.andex.data.Question;
+import fr.umlv.andex.data.Quiz;
 
 public class QuestionActivity extends Activity implements OnClickListener {
 
 	private  final static int VIEW_ID_TEXT = Integer.MAX_VALUE;
 	private  final static int VIEW_ID_RADIO = Integer.MAX_VALUE/2;
 	
+	private Quiz quiz;
 	private Question question;
 	private Answer answerImage;
 	private long idUser;
@@ -53,16 +55,18 @@ public class QuestionActivity extends Activity implements OnClickListener {
 	private Button buttonPhoto;
 	private Button save;
 	
+	@SuppressWarnings("deprecation")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		
 		idUser = (Long)getIntent().getExtras().get("userId");
-		Long idQuestion = (Long)getIntent().getExtras().get("idQuestion");
+		//Long idQuestion = (Long)getIntent().getExtras().get("idQuestion");
 		
 		QuizController quizController = new QuizController();
-        question = quizController.findQuestion(this, idQuestion, idUser);
+        question = (Question)getIntent().getExtras().get("question");
+        quiz = (Quiz)getIntent().getExtras().get("quiz");
 		
 		LinearLayout layout = new LinearLayout(this); 
         layout.setBackgroundColor(Color.WHITE);
@@ -80,14 +84,14 @@ public class QuestionActivity extends Activity implements OnClickListener {
         layout.addView(scroll, layoutParams);
         
         String message = 
-	       	String.format(getResources().getString(R.string.log_question_view)+" %s", idUser+"", idQuestion+"");
+	       	String.format(getResources().getString(R.string.log_question_view)+" %s", idUser+"", question.getIdQuestion()+"");
 	    quizController.addLogUser(this, message, idUser);
         
         createView(layoutIntern);
         setContentView(layout);
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	private void createView(LinearLayout layout){
 		
 		Point size = new Point();
@@ -215,6 +219,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		layout.addView(grid);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void createAnswerRadio(LinearLayout layout, Answer answer){
 		
 		AnswerRadio answerRadio = (AnswerRadio)answer;
@@ -238,6 +243,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		layout.addView(radioGroup, layoutParams);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void createAnswerCheck(LinearLayout layout, Answer answer){
 		
 		AnswerCheck answerCheck = (AnswerCheck)answer;
@@ -258,6 +264,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void createAnswerText(LinearLayout layout, Answer answer){
 		
 		AnswerText answerText = (AnswerText)answer;
@@ -276,6 +283,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		layout.addView(answerField, layoutParams);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void createAnswerPhoto(LinearLayout layout, Answer answer){
 		
 		answerImage = answer;
@@ -292,6 +300,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
 		layout.addView(buttonPhoto, layoutParams);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void createAnswerSchema(LinearLayout layout, Answer answer){
 		
 		answerImage = answer;
@@ -323,7 +332,6 @@ public class QuestionActivity extends Activity implements OnClickListener {
 			
 			if(deadline != null){
 				deadline.cancel(true);
-				save(false);
 			}
 			
 			save(false);
@@ -332,16 +340,18 @@ public class QuestionActivity extends Activity implements OnClickListener {
 			Intent preIntent = new Intent(this,
     				QuestionActivity.class);
 			QuizController quizController = new QuizController();
-			long idNext = quizController.findNextQuestion(question.getIdQuestion());
-			preIntent.putExtra("idQuestion", idNext);
+			Question next = quizController.findNextQuestion(quiz, question);
+			preIntent.putExtra("question", next);
+			preIntent.putExtra("quiz", quiz);
 			preIntent.putExtra("userId", idUser);
     		startActivity(preIntent);
 		}else if(text.equals(getResources().getString(R.string.previous))){
 			Intent preIntent = new Intent(this,
     				QuestionActivity.class);
 			QuizController quizController = new QuizController();
-			long idPrevious = quizController.findPreviousQuestion(question.getIdQuestion());
-			preIntent.putExtra("idQuestion", idPrevious);
+			Question previous = quizController.findPreviousQuestion(quiz, question);
+			preIntent.putExtra("question", previous);
+			preIntent.putExtra("quiz", quiz);
 			preIntent.putExtra("userId", idUser);
     		startActivity(preIntent);
 		}

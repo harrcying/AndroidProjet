@@ -2,6 +2,7 @@ package fr.umlv.andex.data;
 
 public class AnswerText extends Answer{
 	
+	private static final long serialVersionUID = 1L;
 	private String value;
 	
 	public AnswerText(){

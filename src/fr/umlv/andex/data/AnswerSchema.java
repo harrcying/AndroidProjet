@@ -2,6 +2,7 @@ package fr.umlv.andex.data;
 
 public class AnswerSchema extends Answer{
 	
+	private static final long serialVersionUID = 1L;
 	private String path;
 
 	public AnswerSchema(){

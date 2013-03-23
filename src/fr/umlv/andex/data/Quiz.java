@@ -1,12 +1,19 @@
 package fr.umlv.andex.data;
 
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Quiz {
+
+public class Quiz implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private long idQuiz;
 	private String title;
 	private String description;
 	private StateQuiz state;
+	private TreeQuestion tree;
+	private List<Question> questionsByOrder = new LinkedList<Question>();
 	
 	public StateQuiz getState() {
 		return state;
@@ -20,8 +27,6 @@ public class Quiz {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	private TreeQuestion tree;
-	
 	public String getTitle() {
 		return title;
 	}
@@ -40,5 +45,11 @@ public class Quiz {
 	}
 	public void setIdQuiz(long idQuiz) {
 		this.idQuiz = idQuiz;
+	}
+	public List<Question> getQuestionsByOrder() {
+		return questionsByOrder;
+	}
+	public void setQuestionsByOrder(List<Question> questionsByOrder) {
+		this.questionsByOrder = questionsByOrder;
 	}
 }

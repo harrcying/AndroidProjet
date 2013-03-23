@@ -1,15 +1,18 @@
 package fr.umlv.andex.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NodeQuestion {
+public class NodeQuestion implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String title;
 	private long time;
 	private int id;
 	private boolean open;
 	private List<NodeQuestion> nodes = new ArrayList<NodeQuestion>();
+	private Question question = null;
 
 	
 	public long getTime() {
@@ -46,6 +49,14 @@ public class NodeQuestion {
 	}
 	
 	public boolean isLeaf(){
-		return nodes.size()==0;
+		return (question != null);
+	}
+	public Question getQuestion() {
+		return question;
+	}
+	public void setQuestion(Question question) {
+		if (nodes.size()==0) {
+			this.question = question;
+		}
 	}
 }

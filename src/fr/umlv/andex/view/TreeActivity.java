@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,7 +21,6 @@ import fr.umlv.andex.R;
 import fr.umlv.andex.controller.QuizController;
 import fr.umlv.andex.data.NodeQuestion;
 import fr.umlv.andex.data.Quiz;
-import fr.umlv.andex.data.TreeQuestion;
 
 public class TreeActivity extends Activity implements View.OnClickListener{
 	
@@ -58,7 +58,8 @@ public class TreeActivity extends Activity implements View.OnClickListener{
         	item.setBackgroundColor(Color.WHITE);
         	item.setPadding(7, 7, 7, 7);
         	
-        	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+        	@SuppressWarnings("deprecation")
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
            	     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 0, 0, 1);
         	layout.addView(item, layoutParams);
@@ -69,7 +70,8 @@ public class TreeActivity extends Activity implements View.OnClickListener{
         } 
     }
     
-    private void searchItem(List<NodeQuestion> list, int id){
+    @SuppressLint("SimpleDateFormat")
+	private void searchItem(List<NodeQuestion> list, int id){
     	
     	boolean find = false;
     	Iterator<NodeQuestion> it = list.iterator();
@@ -95,9 +97,9 @@ public class TreeActivity extends Activity implements View.OnClickListener{
     				}
     				
     				
-    				Intent preIntent = new Intent(this,
-    	    				QuestionActivity.class);
-    				preIntent.putExtra("idQuestion", new Long(item.getId()));
+    				Intent preIntent = new Intent(this, QuestionActivity.class);
+    				preIntent.putExtra("question", item.getQuestion());
+    				preIntent.putExtra("quiz", quiz);
     				preIntent.putExtra("userId", idUser);
     	    		startActivity(preIntent);
     			}

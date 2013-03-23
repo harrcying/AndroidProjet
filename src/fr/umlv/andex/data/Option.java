@@ -1,7 +1,10 @@
 package fr.umlv.andex.data;
 
-public class Option {
+import java.io.Serializable;
+
+public class Option implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String description;
 	private int id;
 

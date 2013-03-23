@@ -5,6 +5,7 @@ import java.util.List;
 
 public class AnswerCheck extends Answer{
 	
+	private static final long serialVersionUID = 1L;
 	private List<Option> options = new ArrayList<Option>();
 	private List<Integer> values = new ArrayList<Integer>();
 	
