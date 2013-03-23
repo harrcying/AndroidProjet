@@ -20,6 +20,7 @@ The users.json and courses.json allow to deduce which exams each student can joi
 
 Updates:
 2013/02/26: /connect can return a 403 error if the (user, password) are incorrect
+2013/03/18: we don't open several times the temporary file of the zip archive for a better Windows compatibility
 
 @author chilowi at univ-mlv.fr
 """
@@ -28,6 +29,16 @@ import os, os.path, sys, cgi
 import BaseHTTPServer
 
 LOCK_SLEEP_TIME = 0.01 # Waiting time to acquire the directory lock
+
+class AutoDeletedReadableFile(object):
+	def __init__(self, path): 
+		self.path = path
+		self.f = open(path, 'r')
+	def read(self): 
+		return self.f.read()
+	def close(self):
+		self.f.close()
+		os.remove(self.path)
 
 class HttpException(Exception):
 	def __init__(self, code, message):
@@ -82,7 +93,7 @@ class RESTHandlerFactory(object):
 					self.send_response(e.code, e.message)
 				else:
 					if hasattr(r, 'read'):
-						r.seek(0)
+						# r.seek(0)
 						r2 = r.read() # It could be memory-costly for large files
 						r.close()
 					elif isinstance(r, basestring):
@@ -143,14 +154,17 @@ class AndexServerHandlerFactory(RESTHandlerFactory):
 		return {'token': token, 'exams': exams}
 	def GET_exam(self, token, exam):
 		# Get the directory of the exam and compress it to a zip file
+		d = self._get_path('exams', exam)
+		if not os.path.exists(d):
+			raise HttpException(404, "Exam %s does not exist" % exam)
 		from tempfile import NamedTemporaryFile
 		from zipfile import ZipFile, ZIP_DEFLATED
-		tmpfile = NamedTemporaryFile(suffix='andexserv')
+		tmpfile = NamedTemporaryFile(suffix='andexserv', delete=False)
+		tmpfile.close()
 		with ZipFile(tmpfile.name, 'w', compression=ZIP_DEFLATED) as z:
-			d = self._get_path('exams', exam)
 			for e in os.listdir(d):
 				z.write(os.path.join(d, e), e)
-		return tmpfile
+		return AutoDeletedReadableFile(tmpfile.name)
 	def GET_updates(self, token, exam, lastModified):
 		# Read all the update files of the exam since lastModified and merge them into a JSON sequence
 		lastModified = int(lastModified)
