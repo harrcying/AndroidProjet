@@ -92,6 +92,5 @@ public class LoginController {
 		}
 
 		return user;
-		return userO;
 	}
 }
