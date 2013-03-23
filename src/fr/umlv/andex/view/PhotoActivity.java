@@ -62,7 +62,7 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 				}
 			}
 		}
-		
+
 		// On recupere notre surface pour le preview
 		surfaceCamera = (SurfaceView) findViewById(R.id.surfaceViewCamera);
 
@@ -172,12 +172,12 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 
 				// On redémarre la prévisualisation
 				camera.startPreview();
-				
+
 				Intent intent = new Intent();
 				intent.putExtra("PATH_PHOTO", getRealPathFromURI(uri));
 				setResult(RESULT_OK, intent);
 				finish();
-				
+
 			}
 		}
 	};
@@ -202,19 +202,19 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 			// Ouverture du flux pour la sauvegarde
 			stream = (FileOutputStream)getContentResolver().openOutputStream(uri);
 			camera.takePicture(null, pictureCallback, pictureCallback);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
+		String[] proj = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(column_index);
+	}
 }

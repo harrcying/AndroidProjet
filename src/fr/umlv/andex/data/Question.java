@@ -10,19 +10,11 @@ public class Question implements Serializable{
 	private String title;
 	private String text;
 	private long time;
-	private long idQuiz;
 	private long idQuestion;
 	private boolean readOnly;
 	private byte[] image;
 	private List<Answer> answers = new ArrayList<Answer>();
 
-	
-	public long getIdQuiz() {
-		return idQuiz;
-	}
-	public void setIdQuiz(long idQuiz) {
-		this.idQuiz = idQuiz;
-	}
 			
 	public List<Answer> getAnswers() {
 		return answers;
