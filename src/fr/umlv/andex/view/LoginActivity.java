@@ -31,7 +31,22 @@ public class LoginActivity extends Activity {
     	String passwordText = password.getText().toString();
     	String nameUserText = nameUser.getText().toString();
     	
+    	
+    	final String username = nameUserText;
+    	final String password = passwordText;
     	User user = loginController.findUserByUserAndPassword(nameUserText, passwordText);
+    	
+    	Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				User user =loginController.findUserByUserAndPassword(username, password);
+				
+			}
+		});
+    	t.start();
+    	
+    	
+    	
     	
     	if(user == null){
     		Toast.makeText(this, "Utilisateur ou Mot de pass incorrect.", Toast.LENGTH_SHORT).show();

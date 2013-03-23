@@ -17,20 +17,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import fr.umlv.andex.data.User;
 
-public class LoginController {
+public class LoginTask extends AsyncTask<String, Void, User>{
+	User user=null;
 
-	public User findUserByUserAndPassword(String username, String password){
-		User user =null;
+	@Override
+	protected User doInBackground(String... params) {
+
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 
 			HttpPost httpPost = new HttpPost("http://192.168.0.18:12345/connect");
 
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("username",username));
-			nameValuePairs.add(new BasicNameValuePair("password",password));
+			nameValuePairs.add(new BasicNameValuePair("username",params[0]));
+			nameValuePairs.add(new BasicNameValuePair("password",params[1]));
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs)); 
 
 			httpPost.getRequestLine();
@@ -41,8 +44,8 @@ public class LoginController {
 
 			if (resEntity != null) {
 				user = new User();
-				user.setUser(username);
-				user.setPassword(password);
+				user.setUser(params[0]);
+				user.setPassword(params[1]);
 				
 				String responseBody = EntityUtils.toString(resEntity);
 				try {
@@ -92,6 +95,13 @@ public class LoginController {
 		}
 
 		return user;
-		return userO;
 	}
+
+	@Override
+	protected void onPostExecute(User result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+	}
+	
+
 }
