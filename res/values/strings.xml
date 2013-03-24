@@ -40,7 +40,7 @@
     <string name="log_exam_take">L\'utilisateur %s a prendre l\'examen</string>
     <string name="log_exam_question_list">L\'utilisateur %s a regardé la liste de questions</string>
     <string name="log_question_view">L\'utilisateur %s a vu la question</string>
-    <string name="log_question_answer">L\'utilisateur %s a donné la response à la question</string>
+    <string name="log_question_answer">L\'utilisateur %s a donné la réponse à la question</string>
     
     
 </resources>
