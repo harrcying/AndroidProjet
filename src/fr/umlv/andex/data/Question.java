@@ -67,4 +67,16 @@ public class Question implements Serializable{
 	public void setScale(float scale) {
 		this.scale = scale;
 	}	
+	
+	@Override
+	public boolean equals(Object o){
+		
+		if(o instanceof Question && o != null){
+			Question question = (Question)o;
+			return question.getIdQuestion() == this.idQuestion;
+		}
+		
+		return false;
+		
+	}
 }
