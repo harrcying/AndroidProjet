@@ -22,6 +22,7 @@ import fr.umlv.andex.data.AnswerText;
 import fr.umlv.andex.data.Question;
 import fr.umlv.andex.data.Quiz;
 import fr.umlv.andex.data.QuizDescription;
+import fr.umlv.andex.parser.XMLEncoder;
 import fr.umlv.andex.parser.XMLException;
 import fr.umlv.andex.parser.XMLParser;
 
@@ -68,7 +69,7 @@ public class QuizController {
 		return list;
 	}
 
-	public Quiz getQuiz(long idQuiz){
+	public Quiz getQuiz(long idQuiz){ //TODO Si possible, ajouter le fichier WML dans les attributs du quizz.
 		
 		final String fileName;
 		if(idQuiz%2 != 0){
@@ -130,10 +131,30 @@ public class QuizController {
 
 	public void saveQuestion(Context context, Quiz quiz, Question question, long idUser){
 
+		final String fileName;
+		if(quiz.getIdQuiz()%2 != 0){
+			fileName = "examC.xml";
+		}else {
+			fileName = "examCAnnale.xml";
+		}
+		
+		XMLEncoder encoder = new XMLEncoder(new File(Environment.getExternalStorageDirectory(), fileName));
+		
+		for(Answer a: question.getAnswers()) {
+			try {
+				encoder.putAnswer(question.getIdQuestion(), a);
+			} catch (JDOMException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		//TODO : Ludo
 		/* Ce qui suit sera a supprimer :*/
-		String str = "Question " + question.getIdQuestion() + " : ";
-		for (Answer a : question.getAnswers()) {
+//		String str = "Question " + question.getIdQuestion() + " : ";
+	/*	for (Answer a : question.getAnswers()) {
 			switch (a.getTypeAnswer()) {
 			case TYPE_ANSWER_CHECK :
 				AnswerCheck ac = (AnswerCheck)a;
@@ -161,7 +182,7 @@ public class QuizController {
 				break;
 			}
 			str = str + " / ";
-		}
+		} */
 	}
 
 	public void addLogUser(Context context, String message, long idUser){
