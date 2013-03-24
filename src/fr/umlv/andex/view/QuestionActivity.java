@@ -458,7 +458,6 @@ public class QuestionActivity extends Activity implements OnClickListener {
 	}
 	
 	public void save(boolean readOnly){
-		
 		QuizController quizController = new QuizController();
 		question.setReadOnly(readOnly);
 		

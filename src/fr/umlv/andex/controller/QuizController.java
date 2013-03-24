@@ -129,7 +129,12 @@ public class QuizController {
 		 // TODO : ludo
 	}
 
-	public void saveQuestion(Context context, Quiz quiz, Question question, long idUser){
+	public void saveQuestion(Context context, Quiz quiz, Question question, long idUser){ 
+		// La sauvegarde du fichier a l'air de fonctionner mais pas l'ajout de la réponse
+		// L'ajout de la réponse marche hors android
+		// Voir pour coriger les bugs
+		
+		System.out.println("SAVE HERE");
 
 		final String fileName;
 		if(quiz.getIdQuiz()%2 != 0){
@@ -138,7 +143,13 @@ public class QuizController {
 			fileName = "examCAnnale.xml";
 		}
 		
-		XMLEncoder encoder = new XMLEncoder(new File(Environment.getExternalStorageDirectory(), fileName));
+		File file = new File(Environment.getExternalStorageDirectory(), fileName);
+		
+//		file.createNewFile();
+		
+		XMLEncoder encoder = new XMLEncoder(file);
+		
+		System.out.println("file : " + file.getAbsolutePath());
 		
 		for(Answer a: question.getAnswers()) {
 			try {
