@@ -17,7 +17,6 @@ public class LoginActivity extends Activity {
 	private EditText nameUser;
 	private EditText password;
 
-	private boolean isWaiting;
 	private User user = new User();
 
 

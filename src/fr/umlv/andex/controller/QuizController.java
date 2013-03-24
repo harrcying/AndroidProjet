@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.jdom2.JDOMException;
@@ -20,13 +19,9 @@ import fr.umlv.andex.data.AnswerPhoto;
 import fr.umlv.andex.data.AnswerRadio;
 import fr.umlv.andex.data.AnswerSchema;
 import fr.umlv.andex.data.AnswerText;
-import fr.umlv.andex.data.NodeQuestion;
-import fr.umlv.andex.data.Option;
 import fr.umlv.andex.data.Question;
 import fr.umlv.andex.data.Quiz;
 import fr.umlv.andex.data.QuizDescription;
-import fr.umlv.andex.data.StateQuiz;
-import fr.umlv.andex.data.TreeQuestion;
 import fr.umlv.andex.parser.XMLException;
 import fr.umlv.andex.parser.XMLParser;
 
