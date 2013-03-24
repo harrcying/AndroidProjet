@@ -112,7 +112,6 @@ public class QuizController {
 	}
 
 	public Question findNextQuestion(Quiz q, Question question){
-		System.out.println(question);
 		int index = q.getQuestionsByOrder().indexOf(question);
 		if (index<q.getQuestionsByOrder().size()-1) {
 			return q.getQuestionsByOrder().get(index+1);
@@ -168,7 +167,6 @@ public class QuizController {
 			}
 			str = str + " / ";
 		}
-		System.out.println(str);
 	}
 
 	public void addLogUser(Context context, String message, long idUser){

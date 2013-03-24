@@ -55,21 +55,6 @@ public class ListQuizActivity extends Activity implements OnItemClickListener{
 		viewExam();
 	}
 
-	/*private void takeExam(){
-
-	    QuizController quizController = new QuizController();
-	    quizController.saveExam(this, idQuizSelected, idUser);
-
- 	   String message = 
-       	String.format(getResources().getString(R.string.log_exam_take)+" %s", idUser+"", idQuizSelected+"");
-       quizController.addLogUser(this, message, idUser);
-
-		Intent preIntent = new Intent(this, TreeActivity.class);
-		preIntent.putExtra("idQuiz", idQuizSelected);
-		preIntent.putExtra("userId", idUser);
-		startActivity(preIntent);
-	}*/
-
 	private void viewExam(){
 
 		QuizController quizController = new QuizController();

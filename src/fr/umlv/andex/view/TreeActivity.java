@@ -47,7 +47,6 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 
 		if (quiz.getState()==StateQuiz.IN_PROGRESS) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			System.out.println("coucou");
 			builder.setMessage(R.string.text_confirm)
 			.setCancelable(false)
 			.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -59,7 +58,6 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 			.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					//dialog.cancel();
-					System.out.println("4");
 					Intent preIntent = new Intent(TreeActivity.this,ListQuizActivity.class);
 					preIntent.putExtra("userId", idUser);
 					startActivity(preIntent);
@@ -67,7 +65,6 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 			});
 			AlertDialog alert = builder.create();
 			alert.show();
-			System.out.println("2");
 		} else {
 			LinearLayout layout = makeLayout();
 			addTree(layout, quiz.getTree().getNodes(), "-");
@@ -76,8 +73,6 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 	}
 
 	private void addTree(LinearLayout layout, List<NodeQuestion> nodes, String prefix){
-
-		System.out.println("3");
 
 		for(NodeQuestion node :nodes){
 
@@ -132,10 +127,6 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 						Toast messageView = Toast.makeText(this, message, Toast.LENGTH_SHORT);
 						messageView.show();
 					}
-
-					System.out.println("item");
-					System.out.println(item.getTitle());
-					System.out.println(item.getQuestion());
 
 					Intent preIntent = new Intent(this, QuestionActivity.class);
 					preIntent.putExtra("question", item.getQuestion());
