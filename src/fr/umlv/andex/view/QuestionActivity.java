@@ -37,7 +37,6 @@ import fr.umlv.andex.data.AnswerText;
 import fr.umlv.andex.data.Option;
 import fr.umlv.andex.data.Question;
 import fr.umlv.andex.data.Quiz;
-import fr.umlv.andex.data.StateQuiz;
 
 public class QuestionActivity extends Activity implements OnClickListener {
 
@@ -478,8 +477,8 @@ public class QuestionActivity extends Activity implements OnClickListener {
 				};break;
 			}
 		}
-		if (quiz.getState()==StateQuiz.IN_PROGRESS) {
+		//if (quiz.getState()==StateQuiz.IN_PROGRESS) {
 			quizController.saveQuestion(this, quiz, question, idUser);
-		}
+		//}
 	}
 }

@@ -28,6 +28,8 @@ import fr.umlv.andex.data.TypeAnswer;
 
 public class XMLParser {
 	private final File examFile;
+	
+	private boolean in_progress;
 
 	private static String EXAM_B 			= "examen";
 	private static String PART_B			= "partie";
@@ -75,8 +77,10 @@ public class XMLParser {
 		quiz.setTitle(title);
 		if (type.compareTo("NOW") == 0) {
 			quiz.setState(StateQuiz.IN_PROGRESS);
+			in_progress = true;
 		} else if (type.compareTo("PAST") == 0) {
 			quiz.setState(StateQuiz.DONE);
+			in_progress = true;
 		} else {
 			throw new XMLException("Wrong type Exam");
 		}
@@ -141,6 +145,7 @@ public class XMLParser {
 					if (time != 0) {
 						quest.setTime(time);
 					}
+					quest.setReadOnly(!in_progress);
 					parentNode.setQuestion(quest);
 					listQuestions.add(quest);
 					
