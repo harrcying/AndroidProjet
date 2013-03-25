@@ -65,7 +65,7 @@ public class XMLParser {
 		document = sxb.build(examFile);
 
 		racine = document.getRootElement(); // recupere <examen>
-		Quiz quiz = new Quiz();
+		Quiz quiz = new Quiz(examFile);
 		long id = racine.getAttribute(EXAMID_A).getLongValue();
 		String matiere = racine.getAttributeValue(SUBJECT_A);
 		@SuppressWarnings("unused") /* pour une utilisation ulterieure */

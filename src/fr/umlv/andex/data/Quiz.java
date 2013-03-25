@@ -1,5 +1,6 @@
 package fr.umlv.andex.data;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,11 @@ public class Quiz implements Serializable{
 	private StateQuiz state;
 	private TreeQuestion tree;
 	private List<Question> questionsByOrder = new LinkedList<Question>();
+	private final File XMLfile;
+	
+	public Quiz (File file) {
+		XMLfile = file;
+	}
 	
 	public StateQuiz getState() {
 		return state;
@@ -51,5 +57,8 @@ public class Quiz implements Serializable{
 	}
 	public void setQuestionsByOrder(List<Question> questionsByOrder) {
 		this.questionsByOrder = questionsByOrder;
+	}
+	public File getXMLfile() {
+		return XMLfile;
 	}
 }
