@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>	
+<examen examId="000042" matiere="H2G2" title="Le guilde du voyageur intergalactique" examinateurId="Moi" type="NOW" >
+	<partie nom="Partie 1" titre="1]">
+		<question nom="Question 1" bareme="5">
+			<enonce>Réponse universelle ?</enonce>
+			<reponses>
+				<reponse type="TYPE_ANSWER_TEXT"></reponse>
+			</reponses>
+		</question>
+	</partie>
+</examen>
