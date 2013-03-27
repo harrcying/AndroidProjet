@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.umlv.andex.R;
@@ -52,25 +53,30 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 			.setCancelable(false)
 			.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					LinearLayout layout = makeLayout();
-					addTree(layout, quiz.getTree().getNodes(), "-");
+					makeView();
 				}
 			})
 			.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					//dialog.cancel();
-					Intent preIntent = new Intent(TreeActivity.this,ListQuizActivity.class);
-					preIntent.putExtra("userId", idUser);
-					startActivity(preIntent);
+					dialog.cancel();
 				}
 			});
 			AlertDialog alert = builder.create();
 			alert.show();
 		} else {
-			LinearLayout layout = makeLayout();
-			addTree(layout, quiz.getTree().getNodes(), "-");
+			makeView();
 		}
-
+	}
+	
+	private void makeView(){
+		LinearLayout layout = makeLayout();
+		addTree(layout, quiz.getTree().getNodes(), "-");
+		
+		Button save = new Button(this);
+		save.setText(R.string.save);
+		save.setTextColor(Color.BLACK);
+		save.setOnClickListener(this);
+		layout.addView(save);
 	}
 
 	private void addTree(LinearLayout layout, List<NodeQuestion> nodes, String prefix){
@@ -96,11 +102,6 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 				addTree(layout, node.getNodes(), "	" + prefix);
 			}
 		} 
-		Button save = new Button(this);
-		save.setText(R.string.save);
-		save.setTextColor(Color.BLACK);
-		save.setOnClickListener(this);
-		layout.addView(save);
 	}
 
 	//@SuppressLint("SimpleDateFormat")
@@ -117,10 +118,10 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 					item.setOpen(!item.isOpen());
 				}else{
 
-					if(item.getTime()>0){
+					if(item.getQuestion().getTime()>0){
 
 						SimpleDateFormat format = new SimpleDateFormat("mm:ss");
-						Date date = new Date(item.getTime());
+						Date date = new Date(item.getQuestion().getTime()*1000);
 
 						String message = 
 								getResources().getString(R.string.text_time) + " "+format.format(date);
@@ -152,8 +153,7 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 			startActivity(preIntent);
 		} else {
 			searchItem(quiz.getTree().getNodes(), v.getId());
-			LinearLayout layout = makeLayout();
-			addTree(layout, quiz.getTree().getNodes(), "-");
+			makeView();
 		}
 	}
 
@@ -210,8 +210,10 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 		layoutList.setBackgroundColor(Color.LTGRAY);
 		layoutList.setOrientation(LinearLayout.VERTICAL);
 		layoutList.setGravity(Gravity.CENTER);
-
-		layout.addView(layoutList);
+		
+		ScrollView scroll = new ScrollView(this);
+        scroll.addView(layoutList);
+		layout.addView(scroll);
 		return layoutList;
 	}
 }

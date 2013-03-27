@@ -418,23 +418,29 @@ public class QuestionActivity extends Activity implements OnClickListener {
 	
 	public void toReadOnly(){
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(R.string.timeover)
-		       .setCancelable(false)
-		       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		        	   QuestionActivity.this.save(true);
-		        	   QuestionActivity.this.disableButtons();
-		           }
-		       })
-		       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		                dialog.cancel();
-		                QuestionActivity.this.disableButtons();
-		           }
-		       });
-		AlertDialog alert = builder.create();
-		alert.show();
+		try{
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.timeover)
+			       .setCancelable(false)
+			       .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   QuestionActivity.this.save(true);
+			        	   QuestionActivity.this.disableButtons();
+			           }
+			       })
+			       .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			                dialog.cancel();
+			                QuestionActivity.this.disableButtons();
+			           }
+			       });
+			AlertDialog alert = builder.create();
+			alert.show();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void disableButtons(){
