@@ -9,6 +9,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     
     <application android:label="@string/app_name">
         <activity
@@ -23,6 +24,7 @@
         <activity android:name=".view.TreeActivity"></activity>
         <activity android:name=".view.QuestionActivity"></activity>
         <activity android:name=".view.PhotoActivity"></activity>
+        <service android:name=".controller.ShiftQuizService"></service>
     </application>
 
 </manifest>

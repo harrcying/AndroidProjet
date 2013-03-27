@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import fr.umlv.andex.R;
 import fr.umlv.andex.controller.LoginController;
+import fr.umlv.andex.controller.ShiftQuizService;
 import fr.umlv.andex.data.User;
 
 public class LoginActivity extends Activity {
@@ -26,7 +27,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.main);
         
         nameUser = (EditText)findViewById(R.id.nameuser);
-        password = (EditText)findViewById(R.id.password);
+        password = (EditText)findViewById(R.id.password);  
     }
     
     public void loginByUserAndPassword(View v){
@@ -46,6 +47,7 @@ public class LoginActivity extends Activity {
     	}
     	
     	try{
+    		
     		Intent preIntent = new Intent(v.getContext(),
     				ListQuizActivity.class);
     		preIntent.putExtra("userId", user.getUserId());

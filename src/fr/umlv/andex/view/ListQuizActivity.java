@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import fr.umlv.andex.R;
 import fr.umlv.andex.controller.QuizController;
+import fr.umlv.andex.controller.ShiftQuizService;
 import fr.umlv.andex.data.QuizDescription;
 
 public class ListQuizActivity extends Activity implements OnItemClickListener{
@@ -64,5 +65,10 @@ public class ListQuizActivity extends Activity implements OnItemClickListener{
 		preIntent.putExtra("idQuiz", idQuizSelected);
 		preIntent.putExtra("userId", idUser);
 		startActivity(preIntent);
+		
+		Intent intentService = new Intent(this, ShiftQuizService.class);
+		intentService.putExtra("userId", idUser);
+		intentService.putExtra("idQuiz", idQuizSelected);
+		startService(intentService); 
 	}
 }
