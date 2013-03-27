@@ -2,7 +2,7 @@
 <examen examId="123456" matiere="C++" title="Examen - Semestre 1" examinateurId="Vialette" type="NOW">
 	
 	<partie nom="Partie 1" titre="Feuille 1">
-		<question nom="Question 1" bareme="5" temps="10">
+		<question nom="Question 1" bareme="5" temps="60">
 			<enonce>
 				Voulez-vous gagnez 5 points ?
 				<qcm>

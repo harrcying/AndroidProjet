@@ -194,7 +194,7 @@ public class QuestionActivity extends Activity implements OnClickListener {
     			deadline = new DeadlineTask();
     			deadline.setTimeView(timeView);
     			deadline.setActivity(this);
-    			deadline.execute(question.getTime());
+    			deadline.execute(question.getTime()*1000);
     		}
         	
         	save = new Button(this);
