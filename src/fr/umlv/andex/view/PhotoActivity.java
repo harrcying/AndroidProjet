@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.annotation.SuppressLint;
+//import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -182,7 +182,7 @@ public class PhotoActivity extends Activity implements SurfaceHolder.Callback {
 		}
 	};
 
-	@SuppressLint("SimpleDateFormat")
+	//@SuppressLint("SimpleDateFormat")
 	private void SavePicture() {
 		try {
 			SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM- dd-HH.mm.ss");

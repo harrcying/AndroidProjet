@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import android.annotation.SuppressLint;
+//import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +25,7 @@ import fr.umlv.andex.controller.QuizController;
 import fr.umlv.andex.data.NodeQuestion;
 import fr.umlv.andex.data.Quiz;
 import fr.umlv.andex.data.StateQuiz;
+
 
 public class TreeActivity extends Activity implements View.OnClickListener{
 
@@ -102,7 +103,7 @@ public class TreeActivity extends Activity implements View.OnClickListener{
 		layout.addView(save);
 	}
 
-	@SuppressLint("SimpleDateFormat")
+	//@SuppressLint("SimpleDateFormat")
 	private void searchItem(List<NodeQuestion> list, int id){
 
 		boolean find = false;
